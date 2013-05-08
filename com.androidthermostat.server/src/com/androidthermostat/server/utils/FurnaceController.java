@@ -12,6 +12,7 @@ public class FurnaceController {
 	public boolean coolOn = false;
 	public boolean heatOn = false;
 	public boolean fanOn = false;
+	public boolean LEDOn = false;
 	private Calendar cycleStartTime;
 	private Calendar lastCoolTime;
 	private Calendar lastHeatTime;
@@ -195,6 +196,12 @@ public class FurnaceController {
 			this.coolOn=on;
 			IOIOHelper.getCurrent().toggleCool(on);
 		}
+	}
+	
+	public void toggleLED(boolean on)
+	{
+			this.LEDOn = on;
+			IOIOHelper.getCurrent().toggleLED(on);
 	}
 	
 	public double getEffectiveCalibration(double calibrationIdle, double calibrationRunning, int calibrationSeconds)

@@ -17,7 +17,7 @@ public class IOIOHelper extends BaseIOIOLooper {
 	private DigitalOutput fan;
 	private DigitalOutput heat;
 	private DigitalOutput cool;
-	
+	DigitalOutput testLED;
 
 	private static IOIOHelper current;
 	public static IOIOHelper getCurrent() { return current; }
@@ -39,7 +39,11 @@ public class IOIOHelper extends BaseIOIOLooper {
 	{
 		try { cool.write(on); } catch (Exception e) { Utils.logError(e.toString(), "utils.IOIOHelper.toggleCool"); }
 	}
-	
+
+	public void toggleLED(boolean on)
+	{
+		try { testLED.write(on); } catch (Exception e) { Utils.logError(e.toString(), "utils.IOIOHelper.toggleLED"); }
+	}
 	
 	//The IOIO appears to stop returning new samples after a while.  This is a temp patch to reset the IOIO when this happens.
 	private void checkReset(double volts)
@@ -52,7 +56,8 @@ public class IOIOHelper extends BaseIOIOLooper {
 			repeatSamples=0;
 		}
 		lastSample = volts;
-		if (repeatSamples>30) reset();
+		//if (repeatSamples>30) reset();
+		if (repeatSamples>30) Utils.logInfo("Need to reset, uncomment", "utils.IOIOHelper.setup");
 	}
 	
 	private void reset()
@@ -103,11 +108,13 @@ public class IOIOHelper extends BaseIOIOLooper {
 					heat = ioio_.openDigitalOutput(5, false);
 					fan = ioio_.openDigitalOutput(6, false);
 					cool = ioio_.openDigitalOutput(7, false);
+					testLED = ioio_.openDigitalOutput(0, true);
 					tempIn = ioio_.openAnalogInput(43);
 				} else {
 					fan = ioio_.openDigitalOutput(10, false);
 					heat = ioio_.openDigitalOutput(12, false);
 					cool = ioio_.openDigitalOutput(7, false);
+					testLED = ioio_.openDigitalOutput(0, true);
 					tempIn = ioio_.openAnalogInput(46);
 				}
 				

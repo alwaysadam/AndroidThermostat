@@ -29,7 +29,13 @@
 	    </LinearLayout>
     </LinearLayout>
    	<LinearLayout android:layout_width="fill_parent" android:layout_height="0px" android:orientation="horizontal" android:layout_weight="20">
-     	<Button android:id="@+id/clientButton" android:layout_width="0px" android:layout_height="wrap_content" android:text="Launch Client" android:layout_weight="50" />
+     	<TextView android:layout_width="0px" android:layout_height="wrap_content" android:layout_weight="75" android:text="" />
+     	<Button android:id="@+id/testButton" android:layout_width="0px" android:layout_height="wrap_content" android:text="Toggle" android:layout_weight="25" />
+	</LinearLayout>
+    <LinearLayout android:layout_width="fill_parent" android:layout_height="0px" android:orientation="horizontal" android:layout_weight="20">
+     	<Button android:id="@+id/testOnButton" android:layout_width="0px" android:layout_height="wrap_content" android:text="HeatOn" android:layout_weight="20" />
+     	<Button android:id="@+id/testOffButton" android:layout_width="0px" android:layout_height="wrap_content" android:text="HeatOff" android:layout_weight="20" />
+        <Button android:id="@+id/clientButton" android:layout_width="0px" android:layout_height="wrap_content" android:text="Launch Client" android:layout_weight="1" />
      	<Button android:id="@+id/stopButton" android:layout_width="0px" android:layout_height="wrap_content" android:text="Stop Server" android:layout_weight="50" />
 	</LinearLayout>
     <TextView android:id="@+id/debugText" android:layout_width="fill_parent" android:layout_height="wrap_content"  />

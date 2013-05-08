@@ -35,9 +35,9 @@ public class MainActivity extends Activity {
 	TextView tempText;
 	Button clientButton;
 	Button stopButton;
-
-
-	
+	Button testButton;
+	Button testOnButton;
+	Button testOffButton;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,7 +57,9 @@ public class MainActivity extends Activity {
         tempText  = (TextView) findViewById(R.id.tempText);
         clientButton = (Button) findViewById(R.id.clientButton);
         stopButton = (Button) findViewById(R.id.stopButton);
-
+        testButton = (Button) findViewById(R.id.testButton);
+        testOnButton = (Button) findViewById(R.id.testOnButton);
+        testOffButton = (Button) findViewById(R.id.testOffButton);
         
         refreshHandler= new Handler();
         refreshHandler.postDelayed(refreshRunnable, 1000);
@@ -66,13 +68,39 @@ public class MainActivity extends Activity {
         startService(i);
         
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        
+
+        testButton.setOnClickListener(new View.OnClickListener() {public void onClick(View view) {toggleTest();}});
+        testOnButton.setOnClickListener(new View.OnClickListener() {public void onClick(View view) {HeatOnTest();}});
+        testOffButton.setOnClickListener(new View.OnClickListener() {public void onClick(View view) {HeatOffTest();}});
         clientButton.setOnClickListener(new View.OnClickListener() {public void onClick(View view) {launchClient();}});
         stopButton.setOnClickListener(new View.OnClickListener() {public void onClick(View view) {stop();}});
 
         
 	}
+
+	private void HeatOnTest()
+	{
+		FurnaceController fc =  FurnaceController.getCurrent();
+		fc.toggleHeat(true);
+		//debugText.setText("HeatOnTest()");
+	}	
 	
+	private void HeatOffTest()
+	{
+		FurnaceController fc =  FurnaceController.getCurrent();
+		fc.toggleHeat(false);
+		//debugText.setText("HeatOffTest()");
+	}
+	
+	private void toggleTest()
+	{
+		if (testButton.isPressed()) {
+			FurnaceController fc =  FurnaceController.getCurrent();
+			fc.toggleLED(!fc.LEDOn);
+			debugText.setText("toggleTest(" + String.valueOf(!fc.LEDOn) + ")");
+		}
+
+	}
 
 	private void stop()
 	{
@@ -103,6 +131,7 @@ public class MainActivity extends Activity {
 		if (fc.heatOn) heatText.setText("On"); else heatText.setText("Off");
 		if (fc.coolOn) coolText.setText("On"); else coolText.setText("Off");
 		if (fc.fanOn) fanText.setText("On"); else fanText.setText("Off");
+		
 		tempText.setText(String.valueOf(Conditions.getCurrent().insideTemperature));
 		
 		nameText.setText(Settings.getCurrent().getName());
