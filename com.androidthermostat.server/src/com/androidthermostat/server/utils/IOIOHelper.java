@@ -45,21 +45,6 @@ public class IOIOHelper extends BaseIOIOLooper {
 		try { testLED.write(on); } catch (Exception e) { Utils.logError(e.toString(), "utils.IOIOHelper.toggleLED"); }
 	}
 	
-	//The IOIO appears to stop returning new samples after a while.  This is a temp patch to reset the IOIO when this happens.
-	private void checkReset(double volts)
-	{
-		if (volts == lastSample)
-		{
-			repeatSamples++;
-		} else
-		{
-			repeatSamples=0;
-		}
-		lastSample = volts;
-		//if (repeatSamples>30) reset();
-		if (repeatSamples>30) Utils.logInfo("Need to reset, uncomment", "utils.IOIOHelper.setup");
-	}
-	
 	private void reset()
 	{
 		Utils.logInfo("Resetting IOIO", "utils.IOIOHelper.reset");
@@ -79,7 +64,6 @@ public class IOIOHelper extends BaseIOIOLooper {
 				//double averageVolts = tempIn.getVoltage();
 				//double averageVolts = tempIn.getVoltageBuffered();
 				double averageVolts = tempIn.getVoltage();
-				checkReset(averageVolts);
 	//			if (new Date().getSeconds()==0)	Utils.logInfo("Average volts - " + String.valueOf(averageVolts), "utils.IOIOHelper.getTemperature");
 				double mv = averageVolts * 1000.0;
 				double c = (mv - 500.0)/10.0;
